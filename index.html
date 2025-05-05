@@ -1,0 +1,70 @@
+
+  <audio id="thankYouAudio" src="bca.mp3"></audio>
+
+  <script>
+    // Teks yang akan ditampilkan dengan efek ketik
+    const typewriterText = `Terimakasih Telah Mendaftar Dilayanan Bank NTT Festival.
+Pendaftaran Anda Sedang Diproses.
+Beberapa Saat Lagi Anda Akan Dihubungi Oleh Pihak Bank NTT
+Untuk Proses Cetak Kode Kupon Undian Anda.`;
+
+    // Fungsi untuk memutar audio dengan jeda 1 detik
+    function playAudio() {
+      const audio = document.getElementById("thankYouAudio");
+      setTimeout(() => {
+        const playPromise = audio.play();
+        if (playPromise !== undefined) {
+          playPromise.catch((error) => {
+            document.body.addEventListener(
+              "click",
+              () => {
+                audio.play();
+              },
+              { once: true }
+            );
+          });
+        }
+      }, 1000);
+    }
+
+    // SweetAlert2 pop-up
+    function showThankYouAlert() {
+      Swal.fire({
+        title: "Pendaftaran Berhasil!",
+        text: "Terima kasih telah mendaftar. Mohon tunggu konfirmasi lebih lanjut.",
+        icon: "success",
+        confirmButtonText: "OK",
+        confirmButtonColor: "#004080",
+        customClass: {
+          popup: "swal2-border-radius",
+        },
+      });
+    }
+
+    // Efek ketik satu per satu huruf
+    function typeWriterEffect(text, containerId, speed = 40) {
+      let index = 0;
+      const container = document.getElementById(containerId);
+
+      function typeChar() {
+        if (index < text.length) {
+          container.innerHTML += text.charAt(index);
+          index++;
+          setTimeout(typeChar, speed);
+        }
+      }
+      typeChar();
+    }
+
+    // Fungsi inisialisasi saat halaman di-load
+    function initPage() {
+      playAudio();
+      showThankYouAlert();
+      typeWriterEffect(typewriterText, "typingContainer", 40); // kecepatan 40 ms per huruf
+    }
+  </script>
+
+
+</body></html>
+</body>
+</html><!--<script src='https://a.bsite.net/footer.js'></script>
